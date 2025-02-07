@@ -1,0 +1,58 @@
+require "vnd.dovecot.testsuite";
+require "vnd.proton.expire";
+require "comparator-i;ascii-numeric";
+require "relational";
+
+/*
+ *
+ */
+
+test_set "message" text:
+From: frop@example.com
+To: user@example.org
+Subject: Frop
+
+Test!
+.
+;
+
+test "Not set" {
+	if hasexpiration {
+		test_fail "Erroneously indicating expiration is set";
+	}
+}
+
+test "Set" {
+	expire "day" "10";
+
+	if not hasexpiration {
+		test_fail "Erroneously indicating no expiration is set";
+	}
+}
+
+test "Reset" {
+	unexpire;
+
+	if hasexpiration {
+		test_fail "Erroneously indicating expiration is set";
+	}
+}
+
+test "Check" {
+	expire "day" "20";
+
+	if expiration :comparator "i;ascii-numeric" :value "lt" "day" "10" {
+		test_fail "Erroneously indicating expiration of less than 10 days";
+	}
+
+	if expiration :comparator "i;ascii-numeric" :value "ne" "day" "20" {
+		test_fail "Erroneously indicating expiration not equal to 20 days";
+	}
+
+	if expiration :comparator "i;ascii-numeric" :value "ne" "second" "1728000" {
+		test_fail "Erroneously indicating expiration not equal to 1728000 seconds";
+	}
+	if expiration :comparator "i;ascii-numeric" :value "ne" "minute" "28800" {
+		test_fail "Erroneously indicating expiration not equal to 28800 seconds";
+	}
+}

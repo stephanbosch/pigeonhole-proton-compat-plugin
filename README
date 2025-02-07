@@ -1,0 +1,40 @@
+Sieve Proton Compatibility plugin for Pigeonhole Sieve v3.0
+
+Introduction
+------------
+
+Sieve (RFC 5228) is a highly extensible machine language specifically tailored
+for internet message filtering. For the Dovecot Secure IMAP server, Sieve
+support is provided by the Pigeonhole Sieve plugin. This package extends
+Pigeonhole with support for the vendor-specific Sieve language extensions as
+used by the Proton implementation of Sieve. The goal of this plugin is to
+provide sufficient compatibility to be able to run typical Sieve scripts
+originally written for Proton deployments.
+
+Support for the vnd.proton.expire extension is added by this plugin. The plugin
+adds support for all of the tests and actions defined for this extension.
+However, the message will not actually expire when the expire action is
+executed.
+
+The vnd.proton.eval extension is currently not implemented.
+
+Compiling and Configuring
+-------------------------
+
+Refer to INSTALL file.
+
+Using
+-----
+
+Refer to the Proton documentation about how to use these extensions.
+
+Authors
+-------
+
+Refer to AUTHORS file.
+
+Contact Info
+------------
+
+Stephan Bosch <stephan at rename-it.nl>
+IRC: Freenode, #dovecot, S[r]us

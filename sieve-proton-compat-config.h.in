@@ -1,0 +1,7 @@
+/* Copyright (c) 2025 Pigeonhole authors, see the included COPYING file */
+
+/* Define to the full name of this plugin implementation. */
+#undef SIEVE_PROTON_COMPAT_NAME
+
+/* Define to the version of this plugin implementation. */
+#undef SIEVE_PROTON_COMPAT_VERSION
