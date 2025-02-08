@@ -31,8 +31,8 @@ struct _plugin_context {
 
 const char *sieve_proton_compat_plugin_version = PIGEONHOLE_ABI_VERSION;
 
-int sieve_proton_compat_plugin_load(struct sieve_instance *svinst,
-				    void **context_r)
+void sieve_proton_compat_plugin_load(struct sieve_instance *svinst,
+				     void **context_r)
 {
 	/* Register vnd.proton.* extensions */
 
@@ -43,12 +43,8 @@ int sieve_proton_compat_plugin_load(struct sieve_instance *svinst,
 		     sieve_proton_extensions_count);
 
 	for (i = 0; i < sieve_proton_extensions_count; i++) {
-		if (sieve_extension_register(
-			svinst, sieve_proton_extensions[i], FALSE,
-			&exts[i]) < 0) {
-			i_free(exts);
-			return -1;
-		}
+		exts[i] = sieve_extension_register(
+			svinst, sieve_proton_extensions[i], FALSE);
 		i_assert(exts[i] != NULL);
 		i_assert(str_begins_with(sieve_extension_name(exts[i]),
 					 "vnd.proton."));
@@ -67,7 +63,6 @@ int sieve_proton_compat_plugin_load(struct sieve_instance *svinst,
 		SIEVE_PROTON_COMPAT_NAME, SIEVE_PROTON_COMPAT_VERSION);
 
 	*context_r = pctx;
-	return 0;
 }
 
 void sieve_proton_compat_plugin_unload(

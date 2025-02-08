@@ -35,7 +35,8 @@ sieve_proton_expire_get_context(const struct sieve_runtime_env *renv)
 
 	i_assert(sieve_extension_is(ext, vnd_proton_expire_extension));
 
-	exctx = sieve_message_context_extension_get(renv->msgctx, ext);
+	exctx = (struct ext_expire_context *)
+		sieve_message_context_extension_get(renv->msgctx, ext);
 	if (exctx == NULL) {
 		/* Create context */
 		pool = sieve_message_context_pool(renv->msgctx);
